@@ -2,7 +2,7 @@ Git development began in April 2005 after many developers of the Linux kernel ga
 a proprietary source control management system that had previously been used to maintain the project.[10] 
 The copyright holder of BitKeeper, Larry McVoy, had withdrawn gratis use of the product after claiming that 
 Andrew Tridgell had reverse-engineered the BitKeeper protocols. vinay wanted a distributed system that he 
-could use like BitKeeper, but none of the available free systems met his needs, particularly in terms of 
+could use like BitKeeper, but none of the available free systems met       his needs, particularly in terms of 
 performance. vinay took an example of an SCM system requiring thirty seconds to apply a patch and update 
 all associated metadata, and noted that this would not scale to the needs of Linux kernel development, 
 where syncing with fellow maintainers could require 250 such actions at a time. 
