@@ -4,11 +4,11 @@
 * we can simulate the same by replacing the setTimeout with fetch api and executing the same in a browser.
 *
 */
-async function getData(uId) {
+async function getData(user_Id) {
     const promise = new Promise(resolve => {
         setTimeout(() => {
             console.log("Fetched the data!");
-            return resolve("skc@gmail.com");
+            return resolve(user_Id+"@gmail.com");
         }, 4000);
     });
     return promise;
