@@ -15,7 +15,7 @@ async function getData(user_Id) {
 }
 
 
-const emailGET = async () => {
+const getEmail = async () => {
     
     const email = await getData("skc");
     console.log("fetched email is "+email);
@@ -23,4 +23,4 @@ const emailGET = async () => {
 }
 
 console.log("start");
-emailGET();
+getEmail();
