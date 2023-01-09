@@ -1,10 +1,8 @@
-///getting any selector data globally
 function addGlobalEventListener(type, selector, callback) {
     document.addEventListener(type, (e) => {
         if (e.target.matches(selector)) callback(e);
     });
 }
-//storing for table
 let tableCardList = [
     {
         id: 0,
@@ -28,7 +26,6 @@ let tableCardList = [
         tableItems: [],
     },
 ];
-//displaying table information in html page
 const tableCards = document.querySelector(".table-cards");
 tableCardList.forEach((tableCard) => {
     const tableCardHtml = `
@@ -37,7 +34,8 @@ tableCardList.forEach((tableCard) => {
         }</h2>
     <p class="table-card-para drop" attr-key=${tableCard.id
         }>Total cost: <span id="total-cost" attr-key=${tableCard.id}>${tableCard.tableTotal
-        }</span></p>
+        }</span> <span class="items" attr-key=${tableCard.id}>Totalitems: <span class="value" attr-key=${tableCard.id}>0</span></span></p>
+    
 </div>
     `;
     tableCards.insertAdjacentHTML("beforeend", tableCardHtml);
@@ -47,58 +45,66 @@ let MenuCardList = [
     {
         id: 0,
         name: "puri",
-        type:"mainCourse",
+        
         cost: 100,
+        type:"mainCourse",
     },
     {
         id: 1,
         name: "idli",
-        type:"mainCourse",
+        
         cost: 30,
+        type:"mainCourse",
     },
     {
         id: 2,
         name: "dosa",
-        type:"mainCourse",
+        
         cost: 50,
+        type:"mainCourse",
     },
     {
         id: 3,
         name: "rice",
-        type:"desserts",
+     
         cost: 100,
+        type:"desserts",
     },
     {
         id: 4,
         name: "cofee",
-        type:"desserts",
+        
         cost: 30,
+        type:"desserts",
         
     },
     {
         id: 5,
         name: "tea",
-        type:"desserts",
+      
         cost: 50,
+        type:"desserts",
     },
     {
         id: 6,
         name: "onions",
-        type:"desserts",
+        
         cost: 100,
+        type:"desserts",
        
     },
     {
         id: 7,
         name: "apples",
-        type:"desserts",
         cost: 30,
+        type:"desserts",
     },
     {
         id: 8,
         name: "tea",
         cost: 50,
         type: "desserts",
+        
     },
     {
         id:9,
@@ -106,12 +112,12 @@ let MenuCardList = [
         cost:50,
         type:"desserts",
         
+        
     }
 ];
 function storeMenuCardList() {
     localStorage.setItem("menuCardList", JSON.stringify(MenuCardList));
 }
-//displaying menu cards in the html page
 const menucards = document.querySelector(".menu-cards");
 MenuCardList.forEach((menuCard) => {
     const menuCardHtml = `
@@ -119,36 +125,24 @@ MenuCardList.forEach((menuCard) => {
             <h2 attr-key=${menuCard.id}>${menuCard.name}</h2>
             <p attr-key=${menuCard.id}>Total cost: <span id="total-cost" attr-key=${menuCard.id}>${menuCard.cost}</span></p>
             <p attr-key=${menuCard.id}>Item type: <span id="item-type" attr-key=${menuCard.id}>${menuCard.type}</span></p>
-     </div>
+            
+    </div>
     `;
     menucards.insertAdjacentHTML("beforeend", menuCardHtml);
 });
 storeMenuCardList();
-//starting of drag from menu
 addGlobalEventListener("dragstart", ".menu-card", (e) => {
-    // console.log(e.target);
     e.dataTransfer.setData("text/plain", e.target.getAttribute("attr-key"));
 });
-//to maintain previous values
 addGlobalEventListener("dragover", ".drop", (e) => {
     e.preventDefault();
 });
-//end the drag postion to tables
 addGlobalEventListener("drop",".drop",(e)=>{
-    // console.log(e.target);
-    // const tablekey = e.target.getAttribute("attr-key");
-    // const totalcost = e.target.querySelector("#total-cost")
-    // console.log(totalcost)
-    // const key=e.dataTransfer.getData("text/plain")
-    // const cost=MenuCardList[key].cost
-    // // console.log(cost)
-    // totalcost.innerHTML=parseInt(totalcost.innerHTML)+cost;
     e.preventDefault();
     const key = e.dataTransfer.getData("text/plain");
-    // console.log(key, MenuCardList);
     const tablekey = e.target.getAttribute("attr-key");
     const menuObj = MenuCardList[key];
-    console.table(menuObj.name, menuObj.cost, tablekey, tableCardList[tablekey]);
+
 
     if (
         tableCardList[tablekey].tableItems.find(
@@ -160,7 +154,8 @@ addGlobalEventListener("drop",".drop",(e)=>{
             cost: menuObj.cost,
             individualCost: menuObj.cost,
         });
-        console.log(tableCardList);
+    const items=document.querySelector(`.value[attr-key="${tablekey}"]`)
+    items.innerHTML=parseInt(items.innerHTML)+1;
     } else {
         tableCardList[tablekey].tableItems.forEach((item) => {
             if (item.name == menuObj.name) {
@@ -168,32 +163,13 @@ addGlobalEventListener("drop",".drop",(e)=>{
             }
         });
     }
-
+    
     const totalcost = document.querySelector(
         `#total-cost[attr-key="${tablekey}"]`
     );
     totalcost.innerText = parseInt(totalcost.innerText) + menuObj.cost;
-
-    // tableCardList[tablekey].tableItems.push({ name: menuObj.name, cost: menuObj.cost });
-    // console.log(tableCardList);
     
 })
-///filtering out the select menu using select options and menucards type
-const filterMenuCards = document.querySelector("#select-menu");
-
-filterMenuCards.addEventListener("change", (e) => {
-    console.log(e.target)
-    const menuCards = document.querySelectorAll(".menu-card");
-    menuCards.forEach((card) => {
-        const cardType = card.querySelector("#item-type").innerText;
-        if (cardType == e.target.value || e.target.value == "all") {
-            card.style.display = "block";
-        } else {
-            card.style.display = "none";
-        }
-    });
-});
-// search tables using there id
 const tableSearch = document.querySelector("#search-table");
 tableSearch.addEventListener("keyup", (e) => {
     const tableCards = document.querySelectorAll(".table-card");
@@ -206,23 +182,19 @@ tableSearch.addEventListener("keyup", (e) => {
         }
     });
 });
-//search items using there names
 const menuSearch = document.querySelector("#search-menu");
 menuSearch.addEventListener("keyup", (e) => {
     const menuCards = document.querySelectorAll(".menu-card");
     menuCards.forEach((card) => {
-        // console.log(card)
-        //  console.log(card.children[2].innerText);
         const cardName = card.children[0].innerText;
-
-        if (cardName.toLowerCase().includes(e.target.value.toLowerCase())) {
+        const userName=card.children[2].children[0].innerHTML;
+        if (cardName.toLowerCase().includes(e.target.value.toLowerCase()) || userName.toLowerCase().includes(e.target.value.toLowerCase()) ) {
             card.style.display = "block";
         } else {
             card.style.display = "none";
         }
     });
 });
-//after drop the table operations on click the table
 addGlobalEventListener("click", ".drop", (e) => {
     const dialog = document.querySelector(".show-table-data");
     const tablekey = e.target.getAttribute("attr-key");
@@ -267,16 +239,14 @@ addGlobalEventListener("click", ".drop", (e) => {
     let cnt = 0;
     tablearr.tableItems.forEach((item) => {
         const quantity = Math.floor(item.cost / item.individualCost);
-        // console.log(quantity);
         const showTableHtml = `
         <div class="table-data" attr-table-key="${tablekey}">
                 <div class="sno">${cnt++}</div>
                 <p id="item-name">${item.name}</p>
                 <label for="quantity">
-                    <input type="number" min="1" value="${quantity}" id="input-quantity">
+                    <input type="number" min="1" value="${quantity}" id="input-quantity" attr-table-key="${tablekey}">
                 </label>
                 <p id="cost-display"> ${item.cost}</p>
-                <button class="update-item" attr-table-key="${tablekey}">update</button>
                 <img class="delete-item" src="./assests/delete.svg" alt="delete-icon">
                 <br>
             </div>
@@ -322,6 +292,7 @@ addGlobalEventListener("click", ".drop", (e) => {
         const totalcost = document.querySelector(
             `#total-cost[attr-key="${tablekey}"]`
         );
+        const totalitems=document.querySelector(`.value[attr-key="${tablekey}"]`);
         const totalcostHtml = `
         <div class="bill-data">
 
@@ -340,15 +311,16 @@ addGlobalEventListener("click", ".drop", (e) => {
         cancelBtn.addEventListener("click", (e) => {
             e.preventDefault();
             console.log(tablekey);
-            // const tablecardcolor = document.querySelector(`.table-card[attr-key="${tablekey}"]`);
-            // tablecardcolor.style.backgroundColor = "white";
             dialog.close();
             tablearr.tableItems = [];
             totalcost.innerText = "0";
+            totalitems.innerText="0";
+
         });
 
         dialog.showModal();
     });
+
 });
 addGlobalEventListener("click", ".delete-item", (e) => {
     e.preventDefault();
@@ -359,49 +331,69 @@ addGlobalEventListener("click", ".delete-item", (e) => {
     tablearr.tableItems = tablearr.tableItems.filter(
         (item) => item.name != itemName
     );
-    // console.log(tableCardList);
     e.target.parentElement.remove();
 
     const totalcost = document.querySelector(
         `#total-cost[attr-key="${tablekey}"]`
     );
+    const items=document.querySelector(`.value[attr-key="${tablekey}"]`)
+    items.innerHTML=parseInt(items.innerHTML)-1;
     totalcost.innerText =
         parseInt(totalcost.innerText) - cost > 0
             ? parseInt(totalcost.innerText) - cost
             : 0;
 });
-addGlobalEventListener("click", ".update-item", (e) => {
+addGlobalEventListener("change", "#input-quantity", (e) => {
     e.preventDefault();
     const inputQuantity =
-        e.target.parentElement.querySelector("#input-quantity").value;
-    // console.log(inputQuantity);
+        e.target.value;
     const tablekey = e.target.getAttribute("attr-table-key");
     const tablearr = tableCardList[tablekey];
-    const costDisplay = e.target.parentElement.querySelector("#cost-display");
-    console.log(e.target.parentElement);
-    const itemName = e.target.parentElement.querySelector("#item-name").innerText;
-
+    const costDisplay = e.target.parentElement.parentElement.querySelector("#cost-display");
+    const itemName = e.target.parentElement.parentElement.querySelector("#item-name").innerText;
     const newCost =
         parseInt(inputQuantity) *
         tablearr.tableItems.find((item) => item.name == itemName).individualCost;
-
-    // console.log(newCost, parseInt(inputQuantity), tablearr.tableItems.find((item) => item.name == itemName).individualCost);
-
-    // console.log(costDisplay);
     costDisplay.innerText = `${newCost}`;
     const totalcost = document.querySelector(
         `#total-cost[attr-key="${tablekey}"]`
     );
-    // totalcost.innerText = newCost;
 
     tablearr.tableItems.forEach((item) => {
         if (item.name == itemName) {
             item.cost = newCost;
-            // console.log(tableCardList);
         }
     });
     let total = 0;
     console.log(tableCardList);
+    tableCardList[tablekey].tableItems.forEach((item) => {
+        total += item.cost
+    });
+
+    totalcost.innerText = total;
+});
+addGlobalEventListener("keyup", "#input-quantity", (e) => {
+    e.preventDefault();
+    const inputQuantity =
+        e.target.value;
+    const tablekey = e.target.getAttribute("attr-table-key");
+    const tablearr = tableCardList[tablekey];
+    const costDisplay = e.target.parentElement.parentElement.querySelector("#cost-display");
+    const itemName = e.target.parentElement.parentElement.querySelector("#item-name").innerText;
+    const newCost =
+        parseInt(inputQuantity) *
+        tablearr.tableItems.find((item) => item.name == itemName).individualCost;
+    costDisplay.innerText = `${newCost}`;
+    const totalcost = document.querySelector(
+        `#total-cost[attr-key="${tablekey}"]`
+    );
+
+    tablearr.tableItems.forEach((item) => {
+        if (item.name == itemName) {
+            item.cost = newCost;
+        }
+    });
+    let total = 0;
     tableCardList[tablekey].tableItems.forEach((item) => {
         total += item.cost
     });

@@ -310,6 +310,9 @@ header h1{
     background-color: white;
     padding-left: 5rem;
   } */
+  .items{
+    font-weight: 100!important;
+  }
   @media screen and (max-width: 620px) {
     .container {
       grid-template-columns: 1fr;
