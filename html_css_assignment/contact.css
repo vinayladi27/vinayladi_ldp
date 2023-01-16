@@ -1,0 +1,31 @@
+
+form {
+    margin: 20px 0;
+    padding: 2rem;
+  }
+  
+  label,
+  input[type="submit"] {
+    display: block;
+    margin: 10px 0;
+  }
+  
+  input[type="text"],
+  input[type="email"],
+  textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+  }
+  
+  input[type="submit"] {
+    background-color: #0077ff;
+    color: #fff;
+    cursor: pointer;
+    padding: 0.7rem 1.25rem;
+    border: none;
+    border-radius: 0.25em;
+  }
+  
+  
