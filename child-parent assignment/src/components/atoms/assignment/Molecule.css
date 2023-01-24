@@ -1,0 +1,15 @@
+.small{
+    height:10vh;
+    padding: 5vh;
+    margin-left: 5vh;
+}
+.medium{
+    height: 20vh;
+    padding: 5vh;
+    margin-left: 5vh;
+}
+.large{
+    height:30vh;
+    padding: 5vh;
+    margin-left: 5vh;
+}
