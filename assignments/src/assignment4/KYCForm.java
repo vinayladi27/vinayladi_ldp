@@ -1,9 +1,18 @@
 package assignment4;
 
 import java.util.*;
+class Data{
+    public String formatDate(Date date) {
+        String day = String.format("%02d", date.getDate());
+        String month = String.format("%02d", date.getMonth() + 1);
+        String year = String.format("%04d", date.getYear() + 1900);
+        return day + "-" + month + "-" + year;
+    }
+}
 
 public class KYCForm {
     public static void main(String[] args) {
+        Data obj=new Data();
         Scanner sc = new Scanner(System.in);
         int n = sc.nextInt();
         sc.nextLine();
@@ -37,20 +46,15 @@ public class KYCForm {
                 cal.add(Calendar.DATE, 60);
                 Date anniversaryPlus30 = cal.getTime();
                 if (currentDate.after(anniversaryPlus30)) {
-                    System.out.println(formatDate(anniversaryMinus30) + " " + formatDate(anniversaryPlus30));
+                    System.out.println(obj.formatDate(anniversaryMinus30) + " " + obj.formatDate(anniversaryPlus30));
                 } else {
-                    System.out.println(formatDate(anniversaryMinus30) + " " + formatDate(currentDate));
+                    System.out.println(obj.formatDate(anniversaryMinus30) + " " + obj.formatDate(currentDate));
                 }
             }
         }
     }
 
-    public static String formatDate(Date date) {
-        String day = String.format("%02d", date.getDate());
-        String month = String.format("%02d", date.getMonth() + 1);
-        String year = String.format("%04d", date.getYear() + 1900);
-        return day + "-" + month + "-" + year;
-    }
+
 }
 //sample
 //ip:

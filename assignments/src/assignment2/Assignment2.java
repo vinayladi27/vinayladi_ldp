@@ -1,8 +1,8 @@
 package assignment2;
 
 import java.util.Scanner;
-public class Assignment2 {
-    public static boolean containsAllLetters(String input) {
+class Assignment{
+    public boolean containsAllLetters(String input) {
         boolean[] letters = new boolean[26];
         for (int i = 0; i < input.length(); i++) {
             char c = Character.toLowerCase(input.charAt(i));
@@ -18,11 +18,15 @@ public class Assignment2 {
         }
         return true;
     }
+}
+public class Assignment2 {
+
     public static void main(String[] args){
+        Assignment obj=new Assignment();
         System.out.println("enter string");
         Scanner sc=new Scanner(System.in);
         String s=sc.nextLine();
-        System.out.println(containsAllLetters(s));
+        System.out.println(obj.containsAllLetters(s));
     }
 }
 
